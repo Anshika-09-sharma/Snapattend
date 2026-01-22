@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SnapAttend - Student</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; margin-top: 80px; }
+    .success { color: green; font-size: 22px; }
+    .error { color: red; font-size: 22px; }
+  </style>
+</head>
+<body>
+
+<h2>SnapAttend</h2>
+<p id="status">Checking QR validity...</p>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get("token");
+  const qrTime = params.get("time");
+
+  const QR_VALIDITY = 5000; // 5 sec
+  const currentTime = Date.now();
+
+  const statusEl = document.getElementById("status");
+
+  if(!token || !qrTime){
+    statusEl.innerHTML = "<span class='error'>❌ Invalid QR Code</span>";
+  } else {
+    const timeDiff = currentTime - qrTime;
+
+    if(timeDiff <= QR_VALIDITY){
+      // For demonstration, random student info
+      const studentName = "John Doe";
+      const enrollment = "EN12345";
+
+      statusEl.innerHTML = `<span class='success'>✅ Attendance Marked Successfully<br>Name: ${studentName}<br>Enrollment: ${enrollment}</span>`;
+    } else {
+      statusEl.innerHTML = "<span class='error'>⏰ QR Code Expired, Please Scan Again</span>";
+    }
+  }
+</script>
+
+</body>
+</html>
