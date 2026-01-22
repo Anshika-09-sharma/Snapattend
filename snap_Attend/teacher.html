@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SnapAttend - Teacher QR</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+      margin-top: 50px;
+    }
+    img {
+      margin-top: 20px;
+      width: 250px;
+      height: 250px;
+    }
+    #counter {
+      font-size: 20px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>SnapAttend</h1>
+<h3>Live Attendance QR</h3>
+<p>QR changes every 5 seconds</p>
+<img id="qrImage" src="" alt="QR Code" />
+<div id="counter">5</div>
+
+<script>
+  const QR_INTERVAL = 30; // seconds
+  let counter = QR_INTERVAL;
+
+  function generateQR() {
+    // Random token
+    let token = Math.random().toString(36).substring(2, 10);
+    let timestamp = Date.now();
+
+    // 🔹 CHANGE THIS LINK to your GitHub Pages student.html link
+    let qrData = "https://Anshika-o9-sharma.github.io/snapattend/student.html?token=" 
+                  + token + "&time=" + timestamp;
+
+    let qrURL = "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" 
+                + encodeURIComponent(qrData);
+
+    document.getElementById("qrImage").src = qrURL;
+
+    // Reset counter
+    counter = QR_INTERVAL;
+    document.getElementById("counter").innerText = counter;
+  }
+
+  // Countdown display
+  setInterval(() => {
+    counter--;
+    if(counter >= 0) document.getElementById("counter").innerText = counter;
+  }, 1000);
+
+  // Generate first QR immediately
+  generateQR();
+
+  // Generate new QR every 5 seconds
+  setInterval(generateQR, QR_INTERVAL * 1000);
+</script>
+
+</body>
+</html>
