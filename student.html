@@ -18,7 +18,7 @@
   const token = params.get("token");
   const qrTime = params.get("time");
 
-  const QR_VALIDITY = 5000; // 5 sec
+  const QR_VALIDITY = 30000; // 30 sec
   const currentTime = Date.now();
 
   const statusEl = document.getElementById("status");
